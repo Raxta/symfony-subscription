@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Users list{% endblock %}
+
+{% block content %}
+<div class="row">
+    {% for user in users %}
+        <div class="col s12 m3">
+            <div class="card">
+                <div class="card-image">
+                    <img src="https://source.unsplash.com/random/320x240">
+                    <span class="card-title">{{ user.displayName }}</span>
+                </div>
+                <div class="card-content">
+                    <p>Delectus tempora ea assumenda dolor tenetur omnis. Ipsa earum dignissimos qui. Culpa officia eos.</p>
+                </div>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <div class="card-action">
+                    {% if user.id in subscriptions %}
+                        <a href="{{ path('unsubscribe', {'userId': user.id}) }}">Unsubscribe</a>
+                    {% else %}
+                        <a href="{{ path('subscribe', {'userId': user.id}) }}">Subscribe</a>
+                    {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
